@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = process.env.BACKEND_ENDPOINT || "http://0.0.0.0:8080";
-console.log(ENDPOINT)
+const ENDPOINT = process.env.REACT_APP_BACKEND_ENDPOINT || "http://0.0.0.0:8080";
 
 export default function ClientComponent() {
   const [response, setResponse] = useState("");
