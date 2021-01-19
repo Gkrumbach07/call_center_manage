@@ -21,19 +21,20 @@ const io = require('socket.io')(server, {
 });
 
 // kafka setup
-const KAFKA_HOST = process.env.NODE_ENV;
+const kafka_host = process.env.KAFKA_HOST;
+const kafka_topic = process.env.KAFKA_TOPIC;
 var kafka = require('kafka-node'),
      Consumer = kafka.Consumer,
      client = new kafka.KafkaClient(
        {
-         kafkaHost: 'odh-message-bus-kafka-brokers:9092',
+         kafkaHost: `${kafka_host}:9092`,
          ssl: true
        }
      ),
      consumer = new Consumer(
          client,
          [
-             { topic: 'decoded-speech', partition: 0 }
+             { topic: kafka_topic, partition: 0 }
          ],
          {
              autoCommit: false
