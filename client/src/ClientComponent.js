@@ -39,7 +39,9 @@ export default function ClientComponent() {
 
       var word_ranking = {}
       if(temp[parsed['id']]) {
-        word_ranking = JSON.parse(JSON.stringify(rows[parsed['id']]["ranked_nouns"]));
+        if(rows[parsed['id']]["ranked_nouns"]) {
+          word_ranking = JSON.parse(JSON.stringify(rows[parsed['id']]["ranked_nouns"]));
+        }
         temp[parsed['id']]['nouns'].map(word => {
           if(word_ranking[word]) {
             word_ranking[word] = word_ranking[word] + 1
@@ -49,7 +51,7 @@ export default function ClientComponent() {
           }
         })
       }
-      
+
       temp[parsed['id']]['ranked_nouns'] = word_ranking
       setRows(temp)
     });
