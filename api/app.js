@@ -45,17 +45,18 @@ io.on("connection", (socket) => {
     clearInterval(interval);
   }
   interval = setInterval(() => getApiAndEmit(socket), 1000);
+
+  // kafka Consumer
+  consumer.on('message', function (message) {
+     console.log(message);
+     socket.emit("FromKafka", message.value);
+   });
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
 });
-
-// kafka Consumer
-consumer.on('message', function (message) {
-   console.log(message);
-   socket.emit("FromKafka", message.value);
- });
 
 const getApiAndEmit = socket => {
   const response = new Date();
