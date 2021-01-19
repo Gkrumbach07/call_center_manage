@@ -39,7 +39,7 @@ export default function ClientComponent() {
       }
       else {
         setRows(rows.push(
-          { data.id: {data} }
+          { `${data.id}`: data }
         ))
       }
     });
