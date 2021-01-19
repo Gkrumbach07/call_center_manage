@@ -27,13 +27,12 @@ const useStyles = makeStyles({
 export default function ClientComponent() {
   const [rows, setRows] = useState(
     {
-      {
-  nouns: [ 'quilter', 'apostle', 'classes', 'gospel' ],
-  sentence: 'mister quilter as the apostle of the middle classes and we are glad to welcome his gospel',
-  quality: 'POSITIVE',
-  id: '__defualt__'
-}
-
+      "__defualt__": {
+        nouns: [ 'quilter', 'apostle', 'classes', 'gospel' ],
+        sentence: 'mister quilter as the apostle of the middle classes and we are glad to welcome his gospel',
+        quality: 'POSITIVE',
+        id: '__defualt__'
+      }
     }
   );
 
