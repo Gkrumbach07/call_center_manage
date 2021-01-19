@@ -51,7 +51,7 @@ export default function ClientComponent() {
     // CLEAN UP THE EFFECT
     return () => socket.disconnect();
 
-  }, []);
+  }, [rows]);
 
   return (
     <TableContainer>
