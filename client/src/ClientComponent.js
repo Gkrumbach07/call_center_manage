@@ -25,23 +25,16 @@ const useStyles = makeStyles({
 
 
 export default function ClientComponent() {
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState({});
 
   const classes = useStyles();
 
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
-      if(rows.includes(data.id)) {
-        temp = rows
-        temp[data.id] = data
-        setRows(temp)
-      }
-      else {
-        setRows(rows.push(
-          { `${data.id}`: data }
-        ))
-      }
+      temp = rows
+      temp[data.id] = data
+      setRows(temp)
     });
 
     // CLEAN UP THE EFFECT
@@ -61,14 +54,14 @@ export default function ClientComponent() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name} className={row.quality === "POSITIVE" ? classes.rowPos: classes.rowNeg}>
+          {Object.keys(rows).map((row) => (
+            <TableRow key={rows[row].name} className={rows[row].quality === "POSITIVE" ? classes.rowPos: classes.rowNeg}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {rows[row].name}
               </TableCell>
-              <TableCell align="left">{row.noun}</TableCell>
-              <TableCell align="left">{row.sentence}</TableCell>
-              <TableCell align="left">{row.quality}</TableCell>
+              <TableCell align="left">{rows[row].noun}</TableCell>
+              <TableCell align="left">{rows[row].sentence}</TableCell>
+              <TableCell align="left">{rows[row].quality}</TableCell>
             </TableRow>
           ))}
         </TableBody>
