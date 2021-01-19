@@ -25,16 +25,7 @@ const useStyles = makeStyles({
 
 
 export default function ClientComponent() {
-  const [rows, setRows] = useState(
-    {
-      "__defualt__": {
-        nouns: [ 'quilter', 'apostle', 'classes', 'gospel' ],
-        sentence: 'mister quilter as the apostle of the middle classes and we are glad to welcome his gospel',
-        quality: 'POSITIVE',
-        id: '__defualt__'
-      }
-    }
-  );
+  const [rows, setRows] = useState({});
 
   const classes = useStyles();
 
@@ -42,10 +33,29 @@ export default function ClientComponent() {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
       var parsed = JSON.parse(data)
-      var temp = JSON.parse(JSON.stringify(rows));
+      var temp = JSON.parse(JSON.stringify(rows))
+
+      var word_ranking = {}
+      if(temp[parsed['id']]) {
+        word_ranking = JSON.parse(JSON.stringify(rows[parsed['id']]["ranked_nouns"]));
+        temp[parsed['id']]['nouns'].map(word => {
+          if(word_ranking[word]) {
+            word_ranking[word] = word_ranking[word] + 1
+          }
+          else {
+            word_ranking[word] = 1
+          }
+        })
+      }
+      else {
+        temp[parsed['id']]['nouns'].map(word => {
+          word_ranking[word] = 1
+        })
+      }
+
       temp[parsed['id']] = parsed
+      temp[parsed['id']]['ranked_nouns'] = word_ranking
       setRows(temp)
-      console.log(rows)
     });
 
     // CLEAN UP THE EFFECT
@@ -66,13 +76,13 @@ export default function ClientComponent() {
         </TableHead>
         <TableBody>
           {Object.keys(rows).map((row) => (
-            <TableRow key={rows[row].name} className={rows[row].quality === "POSITIVE" ? classes.rowPos: classes.rowNeg}>
+            <TableRow key={rows[row]['id']} className={rows[row]['quality'] === "POSITIVE" ? classes.rowPos: classes.rowNeg}>
               <TableCell component="th" scope="row">
-                {rows[row].name}
+                {rows[row]['id']}
               </TableCell>
-              <TableCell align="left">{rows[row].noun}</TableCell>
-              <TableCell align="left">{rows[row].sentence}</TableCell>
-              <TableCell align="left">{rows[row].quality}</TableCell>
+              <TableCell align="left">{rows[row]['ranked_nouns'].slice(0,5).map((word) => ({word}, ))}</TableCell>
+              <TableCell align="left">{rows[row]['sentence']}</TableCell>
+              <TableCell align="left">{rows[row]['quality']}</TableCell>
             </TableRow>
           ))}
         </TableBody>
