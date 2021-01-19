@@ -39,12 +39,6 @@ var kafka = require('kafka-node'),
 
 let interval;
 
-// kafka Consumer
-consumer.on('message', function (message) {
-   console.log(message);
-   //socket.emit("FromKafka", message.value);
- });
-
 io.on("connection", (socket) => {
   console.log("New client connected");
   if (interval) {
@@ -52,6 +46,11 @@ io.on("connection", (socket) => {
   }
   interval = setInterval(() => getApiAndEmit(socket), 1000);
 
+  // kafka Consumer
+  consumer.on('message', function (message) {
+     console.log(message);
+     socket.emit("FromKafka", message.value);
+   });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
