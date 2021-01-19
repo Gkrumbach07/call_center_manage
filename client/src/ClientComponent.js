@@ -33,7 +33,7 @@ export default function ClientComponent() {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
       var temp = rows
-      temp[data.id] = data
+      temp[data['id']] = data
       setRows(temp)
       console.log(rows)
     });
