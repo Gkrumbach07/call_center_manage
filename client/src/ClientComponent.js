@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+
 const ENDPOINT = process.env.REACT_APP_BACKEND_ENDPOINT || "http://0.0.0.0:8080";
 
 const useStyles = makeStyles({
@@ -43,7 +44,7 @@ export default function ClientComponent() {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -67,4 +68,5 @@ export default function ClientComponent() {
         </TableBody>
       </Table>
     </TableContainer>
+  )
 }
