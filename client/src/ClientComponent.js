@@ -42,7 +42,7 @@ export default function ClientComponent() {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
       var parsed = JSON.parse(data)
-      var temp = rows
+      var temp = JSON.parse(JSON.stringify(rows));
       temp[parsed['id']] = parsed
       setRows(temp)
       console.log(rows)
@@ -51,7 +51,7 @@ export default function ClientComponent() {
     // CLEAN UP THE EFFECT
     return () => socket.disconnect();
 
-  }, [rows, setRows]);
+  }, [rows]);
 
   return (
     <TableContainer>
