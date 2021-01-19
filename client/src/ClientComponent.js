@@ -80,7 +80,7 @@ export default function ClientComponent() {
               <TableCell component="th" scope="row">
                 {rows[row]['id']}
               </TableCell>
-              <TableCell align="left">{rows[row]['ranked_nouns'].slice(0,5).map((word) => {word})}</TableCell>
+              <TableCell align="left">{rows[row]['nouns'].toString()}</TableCell>
               <TableCell align="left">{rows[row]['sentence']}</TableCell>
               <TableCell align="left">{rows[row]['quality']}</TableCell>
             </TableRow>
