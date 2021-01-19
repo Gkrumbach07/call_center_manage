@@ -34,7 +34,7 @@ export default function ClientComponent() {
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
-      setRows(rows.push(createData("12345", str(data.nouns), sentence, quality))
+      setRows(rows.push(createData("12345", str(data.nouns), sentence, quality)))
     });
 
     // CLEAN UP THE EFFECT
