@@ -38,6 +38,15 @@ const rows = [
 
 ];
 
+const data = {
+  topic: 'decoded-speech',
+  value: '"mister quilter as the apostle of the middle classes and we are glad to welcome his gospel"',
+  offset: 1501,
+  partition: 0,
+  highWaterOffset: 1502,
+  key: null
+}
+
 export default function App() {
   const classes = useStyles();
 
