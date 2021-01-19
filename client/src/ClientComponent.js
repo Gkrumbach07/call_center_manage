@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import socketIOClient from "socket.io-client";
+import { io } from 'socket.io-client';
 const ENDPOINT = process.env.REACT_APP_BACKEND_ENDPOINT || "http://0.0.0.0:8080";
 
 export default function ClientComponent() {
   const [response, setResponse] = useState("");
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
       setResponse(data);
     });

@@ -69,3 +69,4 @@ const getApiAndEmit = socket => {
 };
 
 server.listen(port, host);
+console.log('Listening on: ' + host + ':' + port);
