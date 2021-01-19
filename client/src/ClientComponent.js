@@ -32,7 +32,7 @@ export default function ClientComponent() {
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
-      temp = rows
+      var temp = rows
       temp[data.id] = data
       setRows(temp)
     });
