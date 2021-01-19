@@ -3,6 +3,8 @@ const http = require("http");
 const socketIo = require("socket.io");
 
 const port = process.env.PORT || 8080;
+const host = process.env.IP || '0.0.0.0';
+
 const index = require("./routes/index");
 var cors = require('cors');
 
@@ -66,4 +68,4 @@ const getApiAndEmit = socket => {
   socket.emit("FromAPI", response);
 };
 
-server.listen(port, () => console.log(`Listening on port ${port}`));
+server.listen(port, host);
