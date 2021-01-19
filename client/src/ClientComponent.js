@@ -35,6 +35,7 @@ export default function ClientComponent() {
       var temp = rows
       temp[data.id] = data
       setRows(temp)
+      console.log(rows)
     });
 
     // CLEAN UP THE EFFECT
