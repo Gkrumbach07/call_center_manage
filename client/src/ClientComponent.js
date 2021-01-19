@@ -23,9 +23,6 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, nouns, sentence, quality,) {
-  return { name, nouns, sentence, quality };
-}
 
 export default function ClientComponent() {
   const [rows, setRows] = useState([]);
@@ -35,7 +32,16 @@ export default function ClientComponent() {
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
-      setRows(rows.push(createData("12345", str(data.nouns), sentence, quality)))
+      if(rows.includes(data.id)) {
+        temp = rows
+        temp[data.id] = data
+        setRows(temp)
+      }
+      else {
+        setRows(rows.push(
+          { data.id: {data} }
+        ))
+      }
     });
 
     // CLEAN UP THE EFFECT
