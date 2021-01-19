@@ -22,7 +22,7 @@ var kafka = require('kafka-node'),
      Consumer = kafka.Consumer,
      client = new kafka.KafkaClient(
        {
-         kafkaHost: `${KAFKA_HOST}:9092"`,
+         kafkaHost: `${KAFKA_HOST}:9092`,
          ssl: true
        }
      ),
