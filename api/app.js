@@ -4,9 +4,11 @@ const socketIo = require("socket.io");
 
 const port = process.env.PORT || 8080;
 const index = require("./routes/index");
+var cors = require('cors');
 
 const app = express();
 app.use(index);
+app.use(cors());
 
 const server = http.createServer(app);
 
