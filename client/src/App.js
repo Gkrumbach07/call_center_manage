@@ -47,7 +47,7 @@ export default function App() {
   return (
     <div>
       <button onClick={() => setLoadClient(prevState => !prevState)}>
-        STOP CLIENT
+        TOGGLE CLIENT
       </button>
       {loadClient ? <ClientComponent /> : null}
       <TableContainer component={Paper}>
