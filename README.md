@@ -19,6 +19,11 @@ The backend is an [Express](https://expressjs.com/) api which creates a socket.i
 The data being sent over is from a Kafka topic produced in a machine learning demo [here](https://github.com/Gkrumbach07/docker-py-kaldi-asr).
 To consume the Kafka topic, I used [kafka-node](https://www.npmjs.com/package/kafka-node).
 
+### `npm start`
+Runs the api in development mode.
+Open http://0.0.0.0:8080 to view it in the browser.
+If you are running this on your local machine
+
 ## Deploy to OpenShift 4.x
 For both frontend and backend you can follow the same steps to get the image built.
 1. Naviagte to the Add+ menu in the OpenShift and select the "from Git" option.
