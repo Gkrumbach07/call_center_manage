@@ -49,7 +49,6 @@ io.on("connection", (socket) => {
   if (interval) {
     clearInterval(interval);
   }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
 
   // kafka Consumer
   consumer.on('message', function (message) {
@@ -62,12 +61,6 @@ io.on("connection", (socket) => {
     clearInterval(interval);
   });
 });
-
-const getApiAndEmit = socket => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
-};
 
 server.listen(port, host);
 console.log('Listening on: ' + host + ':' + port);
