@@ -32,4 +32,15 @@ For both frontend and backend you can follow the same steps to get the image bui
 4. Select the Node.js builder image and verify that create route is selected.
 5. Create the build!
 
-Now we need to link the two together using environment variables
+Now we need to link the two together using environment variables.
+### In the client
+1. Navigate to the build config for the cleint.
+2. Under the Environment tab, add a new variable called `REACT_APP_BACKEND_ENDPOINT`.
+3. Set the value to the the route of the backend server. This can be founf in Routes > { your backend route } > location.
+It will look something like this `http://{ host name } :80`. NOTE: remember to have a port `:80` so it routes correctly.
+
+### In the backend
+1. Navigate to the build config for the backend.
+2. Under the Environment tab, add two new variables called `KAFKA_HOST` and `KAFKA_TOPIC`.
+3. You can find the host value in the kafka broker service. The value is equal to the name of that service. You do not need to include the port. ex) `odh-message-bus-kafka-brokers`.
+4. The topic can be whatever you ended up naming the topic in your Kafak producer. If you are following the ML demo, then use this topic: `sentiment-text`.
