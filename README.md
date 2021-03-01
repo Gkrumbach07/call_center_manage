@@ -22,7 +22,6 @@ To consume the Kafka topic, I used [kafka-node](https://www.npmjs.com/package/ka
 ### `npm start`
 Runs the api in development mode.
 Open http://0.0.0.0:8080 to view it in the browser.
-If you are running this on your local machine
 
 ## Deploy to OpenShift 4.x
 For both frontend and backend you can follow the same steps to get the image built.
