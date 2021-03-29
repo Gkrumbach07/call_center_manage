@@ -23,11 +23,13 @@ const io = require('socket.io')(server, {
 // kafka setup
 const kafka_host = process.env.KAFKA_HOST;
 const kafka_topic = process.env.KAFKA_TOPIC;
+const ssl_path = process.env.SSL_PATH;
+
 var kafka = require('kafka-node'),
      Consumer = kafka.Consumer,
      client = new kafka.KafkaClient(
        {
-         kafkaHost: `${kafka_host}:9092`,
+         kafkaHost: `${kafka_host}`,
          ssl: true
        }
      ),
