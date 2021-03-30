@@ -30,7 +30,9 @@ var kafka = require('kafka-node'),
      client = new kafka.KafkaClient(
        {
          kafkaHost: `${kafka_host}`,
-         ssl: true
+         ssl: {
+           ca: [fs.readFileSync(ssl_path, 'utf-8')],
+         },
        }
      ),
      consumer = new Consumer(
