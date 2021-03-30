@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
+const fs = require('fs')
 
 const port = process.env.PORT || 8080;
 const host = process.env.IP || '0.0.0.0';
