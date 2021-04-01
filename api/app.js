@@ -47,12 +47,12 @@ var kafka = require('kafka-node'),
 let interval;
 
 // kafka Consumer
-  consumer.on('message', function (message) {
-     console.log(message);
-     socket.emit("FromKafka", message.value);
-   });
+consumer.on('message', function (message) {
+   console.log(message);
+   socket.emit("FromKafka", message.value);
+ });
 
-on('error', function (err) {
+consumer.on('error', function (err) {
   console.log(err)
 })
 
