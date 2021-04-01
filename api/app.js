@@ -33,7 +33,7 @@ var kafka = require('kafka-node'),
          kafkaHost: `${kafka_host}`,
          sslOptions: {
            rejectUnauthorized: false,
-           cert: [fs.readFileSync(ssl_path, 'utf-8')],
+           ca: [fs.readFileSync(ssl_path, 'utf-8')],
          },
        }
      ),
