@@ -30,7 +30,7 @@ var kafka = require('kafka-node'),
      Consumer = kafka.Consumer,
      client = new kafka.KafkaClient(
        {
-         kafkaHost: `${kafka_host}`,
+         kafkaHost: kafka_host,
        }
      ),
      consumer = new Consumer(
@@ -46,26 +46,31 @@ var kafka = require('kafka-node'),
 
 let interval;
 
-// kafka Consumer
-consumer.on('message', function (message) {
-   console.log(message);
-   socket.emit("FromKafka", message.value);
- });
-
-consumer.on('error', function (err) {
-  console.log(err)
-})
-
 io.on("connection", (socket) => {
   console.log("New client connected");
   if (interval) {
     clearInterval(interval);
   }
+  
+  consumer.addTopics([kafka_topic], function (err, added) {
+    console.log(`Manually added ${kafka_topic}`)
+    console.log(added)
+  });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
+  
+  // kafka Consumer
+  consumer.on('message', function (message) {
+     console.log(message);
+     socket.emit("FromKafka", message.value);
+   });
+
+  consumer.on('error', function (err) {
+    console.log(err)
+  })
 });
 
 server.listen(port, host);
