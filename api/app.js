@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
-  
+});
 
 server.listen(port, host);
 console.log('Listening on: ' + host + ':' + port);
