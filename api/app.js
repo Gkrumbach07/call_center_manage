@@ -30,7 +30,11 @@ const { Kafka } = require('kafkajs')
 
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: [kafka_host]
+  brokers: [kafka_host],
+  ssl: {
+    rejectUnauthorized: false,
+    ca: [fs.readFileSync('/etc/ca-kafka/ca-kafka', 'utf-8')],
+  },
 })
 
 const run = async () => {
