@@ -26,23 +26,29 @@ const kafka_host = process.env.KAFKA_HOST;
 const kafka_topic = process.env.KAFKA_TOPIC;
 const ssl_path = process.env.SSL_PATH;
 
-var kafka = require('kafka-node'),
-     Consumer = kafka.Consumer,
-     client = new kafka.KafkaClient(
-       {
-         kafkaHost: kafka_host,
-       }
-     ),
-     consumer = new Consumer(
-         client,
-         [
-             { topic: kafka_topic}
-         ],
-         {
-             autoCommit: false
-         }
-     );
+const { Kafka } = require('kafkajs')
 
+const kafka = new Kafka({
+  clientId: 'my-app',
+  brokers: [kafka_host]
+})
+
+const run = async () => {
+  const consumer = kafka.consumer({ groupId: 'test-group' })
+
+  await consumer.connect()
+  await consumer.subscribe({ topic: kafka_topic, fromBeginning: true })
+
+  await consumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
+      console.log({
+        value: message.value.toString(),
+      })
+    },
+  })
+}
+
+run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
 
 let interval;
 
@@ -51,27 +57,12 @@ io.on("connection", (socket) => {
   if (interval) {
     clearInterval(interval);
   }
-  
-  consumer.addTopics(['none'], function (err, added) {
-    console.log(`Manually added ${kafka_topic}`)
-    console.log(added)
-  });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
   
-  // kafka Consumer
-  consumer.on('message', function (message) {
-     console.log(message);
-     socket.emit("FromKafka", message.value);
-   });
-
-  consumer.on('error', function (err) {
-    console.log(err)
-  })
-});
 
 server.listen(port, host);
 console.log('Listening on: ' + host + ':' + port);
