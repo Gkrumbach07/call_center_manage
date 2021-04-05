@@ -73,6 +73,5 @@ io.on("connection", (socket) => {
   })
 });
 
-export DEBUG=kafka-node:*
 server.listen(port, host);
 console.log('Listening on: ' + host + ':' + port);
