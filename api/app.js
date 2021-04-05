@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
     clearInterval(interval);
   }
   
-  consumer.addTopics([kafka_topic], function (err, added) {
+  consumer.addTopics(['none'], function (err, added) {
     console.log(`Manually added ${kafka_topic}`)
     console.log(added)
   });
