@@ -37,36 +37,29 @@ const kafka = new Kafka({
   },
 })
 
-// const run = async (socket, consumer) => {
-//   await consumer.connect()
-//   await consumer.subscribe({ topic: kafka_topic, fromBeginning: true })
+const run = async (socket) => {
+  const consumer = kafka.consumer({ groupId: socket.id })
+  await consumer.connect()
+  await consumer.subscribe({ topic: kafka_topic, fromBeginning: false })
 
-//   await consumer.run({
-//     eachMessage: async ({ topic, partition, message }) => {
-//        socket.emit("FromKafka", message.value.toString());
-//     },
-//   })
-// }
+  return consumer
+}
 
 io.on("connection", (socket) => {
   console.log("New client connected");
-//   const consumer = kafka.consumer({ groupId: socket.id })
-  
-//   consumer.connect()
-//   consumer.subscribe({ topic: kafka_topic, fromBeginning: true })
-
-//   consumer.run({
-//     eachMessage: async ({ topic, partition, message }) => {
-//        socket.emit("FromKafka", message.value.toString());
-//     },
-//   })
+  consumer = run(socket).catch(e => console.error(`[example/consumer] ${e.message}`, e))
   
   socket.on("disconnect", () => {
     console.log("Client disconnected");
-    //consumer.disconnect()
+    consumer.disconnect()
   });
   
-  //run(socket, consumer).catch(e => console.error(`[example/consumer] ${e.message}`, e))
+  consumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
+       socket.emit("FromKafka", message.value.toString());
+    },
+  })
+  
 });
 
 server.listen(port, host);
