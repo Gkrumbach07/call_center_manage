@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
     clearInterval(interval);
   });
   
-  run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
+  run(socket).catch(e => console.error(`[example/consumer] ${e.message}`, e))
 });
 
 server.listen(port, host);
