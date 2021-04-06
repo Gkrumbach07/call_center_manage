@@ -52,7 +52,7 @@ let interval;
 
 io.on("connection", (socket) => {
   console.log("New client connected");
-  const consumer = kafka.consumer({ groupId: 'test-group' })
+  const consumer = kafka.consumer({ groupId: socket.id })
   
   consumer.connect()
   consumer.subscribe({ topic: kafka_topic, fromBeginning: true })
