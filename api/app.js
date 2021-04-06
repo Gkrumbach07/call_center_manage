@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
     consumer.disconnect()
   });
   
-  socket.on('connect_failed', e => {
+  socket.on('error', e => {
     console.log(e);
   });
   
