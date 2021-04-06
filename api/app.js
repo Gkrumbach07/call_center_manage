@@ -48,29 +48,22 @@ const kafka = new Kafka({
 //   })
 // }
 
-let interval;
-
 io.on("connection", (socket) => {
   console.log("New client connected");
-  const consumer = kafka.consumer({ groupId: socket.id })
+//   const consumer = kafka.consumer({ groupId: socket.id })
   
-  consumer.connect()
-  consumer.subscribe({ topic: kafka_topic, fromBeginning: true })
+//   consumer.connect()
+//   consumer.subscribe({ topic: kafka_topic, fromBeginning: true })
 
-  consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-       socket.emit("FromKafka", message.value.toString());
-    },
-  })
+//   consumer.run({
+//     eachMessage: async ({ topic, partition, message }) => {
+//        socket.emit("FromKafka", message.value.toString());
+//     },
+//   })
   
-  if (interval) {
-    clearInterval(interval);
-  }
-
   socket.on("disconnect", () => {
     console.log("Client disconnected");
-    clearInterval(interval);
-    consumer.disconnect()
+    //consumer.disconnect()
   });
   
   //run(socket, consumer).catch(e => console.error(`[example/consumer] ${e.message}`, e))
