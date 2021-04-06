@@ -48,7 +48,7 @@ const run = async (socket) => {
       console.log({
         value: message.value.toString(),
       })
-       socket.emit("FromKafka", message.value);
+       socket.emit("FromKafka", message.value.toString());
     },
   })
 }
