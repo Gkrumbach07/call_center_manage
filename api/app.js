@@ -45,9 +45,6 @@ const run = async (socket) => {
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-      console.log({
-        value: message.value.toString(),
-      })
        socket.emit("FromKafka", message.value.toString());
     },
   })
