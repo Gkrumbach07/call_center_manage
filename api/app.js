@@ -58,10 +58,6 @@ io.on("connection", (socket) => {
     consumer.disconnect()
   });
   
-  socket.on('error', e => {
-    console.log(e);
-  });
-  
 });
 
 server.listen(port, host);
