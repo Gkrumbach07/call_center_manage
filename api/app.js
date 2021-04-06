@@ -37,7 +37,7 @@ const kafka = new Kafka({
   },
 })
 
-const run = async () => {
+const run = async (socket) => {
   const consumer = kafka.consumer({ groupId: 'test-group' })
 
   await consumer.connect()
@@ -48,11 +48,10 @@ const run = async () => {
       console.log({
         value: message.value.toString(),
       })
+       socket.emit("FromKafka", message.value);
     },
   })
 }
-
-run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
 
 let interval;
 
@@ -66,6 +65,8 @@ io.on("connection", (socket) => {
     console.log("Client disconnected");
     clearInterval(interval);
   });
+  
+  run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
 });
 
 server.listen(port, host);
