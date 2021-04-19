@@ -50,8 +50,9 @@ export default function ClientComponent() {
         <TableHead>
           <TableRow>
             <TableCell>Call&nbsp;Line</TableCell>
-            <TableCell align="left">Top Words</TableCell>
-            <TableCell align="left">Recent Sentence</TableCell>
+            <TableCell align="left">From Consumer</TableCell>
+            <TableCell align="left">Nouns</TableCell>
+            <TableCell align="left">Sentence</TableCell>
             <TableCell align="left">Quality</TableCell>
           </TableRow>
         </TableHead>
@@ -59,11 +60,14 @@ export default function ClientComponent() {
           {Object.keys(rows).map((row) => (
             <TableRow key={rows[row]['id']} className={rows[row]['quality'] === "POSITIVE" ? classes.rowPos: classes.rowNeg}>
               <TableCell component="th" scope="row">
-                {rows[row]['id']}
+                {rows[row]['id'].toString()}
               </TableCell>
+              {rows[row]['consumer']
+              ? <TableCell align="left">{rows[row]['consumer'].toString()}</TableCell>
+              : null}
               <TableCell align="left">{rows[row]['nouns'].toString()}</TableCell>
-              <TableCell align="left">{rows[row]['sentence']}</TableCell>
-              <TableCell align="left">{rows[row]['quality']}</TableCell>
+              <TableCell align="left">{rows[row]['sentence'].toString()}</TableCell>
+              <TableCell align="left">{rows[row]['quality'].toString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

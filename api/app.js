@@ -45,7 +45,14 @@ const run = async () => {
 
   consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-       io.emit("FromKafka", message.value.toString());
+      if(message.value !== null && message.value !== undefined) {
+        if(message.value["id"]
+        && message.value['sentence']
+        && message.value["quality"]
+        && message.value["nouns"]) {
+          io.emit("FromKafka", message.value.toString());
+        }
+      }
     },
   })
 }
@@ -54,11 +61,11 @@ run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
-  
+
   socket.on("disconnect", () => {
     console.log(`${socket.id} disconnected`);
   });
-  
+
 });
 
 server.listen(port, host);
