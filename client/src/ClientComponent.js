@@ -43,7 +43,6 @@ export default function ClientComponent() {
       temp[parsed['id']] = parsed
       setRows(temp)
       setRaw(raw.concat(parsed))
-      console.log(raw)
     });
 
     // CLEAN UP THE EFFECT
