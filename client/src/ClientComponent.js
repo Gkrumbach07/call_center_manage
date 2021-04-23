@@ -81,11 +81,11 @@ export default function ClientComponent() {
       </Table>
     </TableContainer>
     <List>
-      {raw.slice(0,5).map((d) => (
+      {raw.slice(0,5).map((d) => {
         <ListItem >
           <ListItemText primary={raw} />
         </ListItem>
-      ))}
+      })}
     </List>
   </div>
   )
