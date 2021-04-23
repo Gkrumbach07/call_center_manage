@@ -7,6 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 
 const ENDPOINT = process.env.REACT_APP_BACKEND_ENDPOINT || "http://0.0.0.0:8080";
@@ -26,6 +29,8 @@ const useStyles = makeStyles({
 
 export default function ClientComponent() {
   const [rows, setRows] = useState({});
+  const [raw, setRaw] = useState([]);
+
 
   const classes = useStyles();
 
@@ -37,6 +42,7 @@ export default function ClientComponent() {
 
       temp[parsed['id']] = parsed
       setRows(temp)
+      setRaw(raw.concat(parsed))
     });
 
     // CLEAN UP THE EFFECT
@@ -73,5 +79,12 @@ export default function ClientComponent() {
         </TableBody>
       </Table>
     </TableContainer>
+    <List>
+      {raw.slice(0,5).map((d) => (
+        <ListItem >
+          <ListItemText primary={raw} />
+        </ListItem>
+      ))}
+    </List>
   )
 }
