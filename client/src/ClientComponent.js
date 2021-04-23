@@ -82,9 +82,11 @@ export default function ClientComponent() {
     </TableContainer>
     <List>
       {raw.map((d) => {
-        <ListItem >
-          <ListItemText primary={d.toString()} />
-        </ListItem>
+        return(
+          <ListItem >
+            <ListItemText primary={d.toString()} />
+          </ListItem>
+        )
       })}
     </List>
   </div>
