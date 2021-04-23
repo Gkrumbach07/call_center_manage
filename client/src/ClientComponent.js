@@ -51,6 +51,7 @@ export default function ClientComponent() {
   }, [rows]);
 
   return (
+    <div>
     <TableContainer>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -86,5 +87,6 @@ export default function ClientComponent() {
         </ListItem>
       ))}
     </List>
+  </div>
   )
 }
