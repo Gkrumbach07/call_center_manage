@@ -43,6 +43,7 @@ export default function ClientComponent() {
       temp[parsed['id']] = parsed
       setRows(temp)
       setRaw(raw.concat(parsed))
+      console.log(raw)
     });
 
     // CLEAN UP THE EFFECT
@@ -83,7 +84,7 @@ export default function ClientComponent() {
     <List>
       {raw.slice(0,5).map((d) => {
         <ListItem >
-          <ListItemText primary={raw} />
+          <ListItemText primary={d} />
         </ListItem>
       })}
     </List>
