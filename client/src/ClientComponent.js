@@ -42,7 +42,7 @@ export default function ClientComponent() {
 
       temp[parsed['id']] = parsed
       setRows(temp)
-      setRaw(raw.concat(parsed))
+      setRaw(raw.concat(parsed).slice(-10))
     });
 
     // CLEAN UP THE EFFECT
