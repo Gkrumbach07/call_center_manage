@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function ClientComponent() {
+export default function ClientComponent({ paused }) {
   const [rows, setRows] = useState({});
   const [raw, setRaw] = useState([]);
 
@@ -37,12 +37,14 @@ export default function ClientComponent() {
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
-      var parsed = JSON.parse(data)
-      var temp = JSON.parse(JSON.stringify(rows))
+      if(!paused) {
+        var parsed = JSON.parse(data)
+        var temp = JSON.parse(JSON.stringify(rows))
 
-      temp[parsed['id']] = parsed
-      setRows(temp)
-      setRaw(raw.concat(parsed).slice(-10))
+        temp[parsed['id']] = parsed
+        setRows(temp)
+        setRaw(raw.concat(parsed).slice(-10))
+      }
     });
 
     // CLEAN UP THE EFFECT
