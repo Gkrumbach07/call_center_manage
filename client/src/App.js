@@ -1,6 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ClientComponent from "./ClientComponent";
 
 
@@ -10,7 +8,6 @@ export default function App() {
 
   const handlePause = () => {
     setPaused(!paused)
-
   }
 
   return (
@@ -21,13 +18,13 @@ export default function App() {
         <button onClick={() => setLoadClient(prevState => !prevState)}>
           TOGGLE CONSUMER
         </button>
-        {loadClient 
+        {loadClient
           ? <button onClick={() => handlePause()}>
           {paused ? "PLAY" : "PAUSE"}
           </button>
           : null}
       </div>
-      {loadClient ? <ClientComponent paused/> : null}
+      {loadClient ? <ClientComponent paused={paused}/> : null}
     </div>
   );
 }
