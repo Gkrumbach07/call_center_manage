@@ -15,7 +15,7 @@ export default function App() {
 
   return (
     <div>
-      <div style:{{
+      <div style={{
         display: "flex"
       }}>
         <button onClick={() => setLoadClient(prevState => !prevState)}>
