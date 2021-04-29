@@ -37,6 +37,7 @@ export default function ClientComponent({ paused }) {
   useEffect(() => {
     const socket = io(ENDPOINT);
     socket.on("FromKafka", data => {
+      console.log(paused)
       if(!paused) {
         var parsed = JSON.parse(data)
         var temp = JSON.parse(JSON.stringify(rows))

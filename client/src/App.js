@@ -21,9 +21,11 @@ export default function App() {
         <button onClick={() => setLoadClient(prevState => !prevState)}>
           TOGGLE CONSUMER
         </button>
-        <button onClick={() => handlePause()}>
+        {loadClient 
+          ? <button onClick={() => handlePause()}>
           {paused ? "PLAY" : "PAUSE"}
-        </button>
+          </button>
+          : null}
       </div>
       {loadClient ? <ClientComponent paused/> : null}
     </div>
