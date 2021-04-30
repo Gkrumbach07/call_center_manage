@@ -83,9 +83,9 @@ export default function ClientComponent({ paused }) {
       </Table>
     </TableContainer>
     <List>
-      {raw.map((d) => {
+      {raw.map((d, i) => {
         return(
-          <ListItem key={JSON.stringify(d)}>
+          <ListItem key={i}>
             <ListItemText primary={JSON.stringify(d)} />
           </ListItem>
         )
