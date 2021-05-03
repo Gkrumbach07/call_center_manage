@@ -7,6 +7,10 @@ export default function App() {
   const [paused, setPaused] = useState(false);
 
   const handlePause = () => {
+    if (!paused) {
+      setLoadClient(false)
+    }
+
     setPaused(!paused)
   }
 
@@ -20,7 +24,7 @@ export default function App() {
         </button>
         {loadClient
           ? <button onClick={() => handlePause()}>
-          {paused ? "PLAY" : "PAUSE"}
+          {paused ? "RESTART" : "PAUSE"}
           </button>
           : null}
       </div>
