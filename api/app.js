@@ -45,6 +45,7 @@ const run = async () => {
 
   consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
+      console.log(message);
       if(message.value !== null && message.value !== undefined) {
         if(message.value["id"]
         && message.value['sentence']
