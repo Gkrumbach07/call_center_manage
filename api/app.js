@@ -37,7 +37,7 @@ const kafka = new Kafka({
   },
 })
 
-const consumer = kafka.consumer({ groupId: "default" })
+const consumer = kafka.consumer({ groupId: "test" })
 
 const run = async () => {
   await consumer.connect()
