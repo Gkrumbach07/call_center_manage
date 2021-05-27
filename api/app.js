@@ -47,12 +47,11 @@ const run = async () => {
     eachMessage: async ({ topic, partition, message }) => {
       if(message.value !== null && message.value !== undefined) {
         const m = JSON.parse(message.value)
-        console.log(m);
-        if(message.value["id"]
-        && message.value['sentence']
-        && message.value["quality"]
-        && message.value["nouns"]) {
-          io.emit("FromKafka", message.value.toString());
+        if(m.value["id"]
+        && m.value['sentence']
+        && m.value["quality"]
+        && m.value["nouns"]) {
+          io.emit("FromKafka", m.toString());
         }
       }
     },
