@@ -46,7 +46,8 @@ const run = async () => {
   consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       if(message.value !== null && message.value !== undefined) {
-        console.log(message.value);
+        const m = JSON.parse(message.value)
+        console.log(m);
         if(message.value["id"]
         && message.value['sentence']
         && message.value["quality"]
