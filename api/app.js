@@ -51,7 +51,8 @@ const run = async () => {
         && m['sentence']
         && m["quality"]
         && m["nouns"]) {
-          io.emit("FromKafka", message.value);
+          io.emit("FromKafka", JSON.stringify(m));
+          console.log(m)
         }
       }
     },
