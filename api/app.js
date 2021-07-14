@@ -33,7 +33,9 @@ const kafka = new Kafka({
   brokers: [kafka_host],
   ssl: {
     rejectUnauthorized: false,
-    ca: [fs.readFileSync('/etc/ca-kafka/ca-kafka', 'utf-8')],
+    ca: [fs.readFileSync(ssl_path + '/ca.crt', 'utf-8')],
+    key: fs.readFileSync(ssl_path + '/user.key', 'utf-8'),
+    cert: fs.readFileSync(ssl_path + '/user.cert', 'utf-8'),
   },
 })
 
