@@ -39,7 +39,6 @@ const kafka = new Kafka({
   clientId: 'my-app',
   brokers: [kafka_host],
   logLevel: logLevel.DEBUG,
-  sasl: true,
   ssl: {
     rejectUnauthorized: false,
     ca: [fs.readFileSync(ssl_path + '/ca.crt', 'utf-8')],
