@@ -21,6 +21,13 @@ const io = require('socket.io')(server, {
   }
 });
 
+function createUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 // kafka setup
 const kafka_host = process.env.KAFKA_HOST;
 const kafka_topic = process.env.KAFKA_TOPIC;
@@ -39,7 +46,7 @@ const kafka = new Kafka({
   },
 })
 
-const consumer = kafka.consumer({ groupId: "test" })
+const consumer = kafka.consumer({ groupId: createUUID() })
 
 const run = async () => {
   await consumer.connect()
