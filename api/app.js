@@ -33,18 +33,22 @@ const kafka_host = process.env.KAFKA_HOST;
 const kafka_topic = process.env.KAFKA_TOPIC;
 const ssl_path = process.env.SSL_PATH;
 
-const { Kafka } = require('kafkajs')
+const { Kafka, logLevel } = require('kafkajs')
 
 const kafka = new Kafka({
   clientId: 'my-app',
   brokers: [kafka_host],
+  logLevel: logLevel.DEBUG,
   ssl: {
     rejectUnauthorized: false,
     ca: [fs.readFileSync(ssl_path + '/ca.crt', 'utf-8')],
     key: fs.readFileSync(ssl_path + '/user.key', 'utf-8'),
     cert: fs.readFileSync(ssl_path + '/user.crt', 'utf-8'),
+    passphrase: fs.readFileSync(ssl_path + '/user.password', 'utf-8')
   },
 })
+
+console.log("Kafka Client Connected")
 
 const consumer = kafka.consumer({ groupId: createUUID() })
 
