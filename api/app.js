@@ -50,7 +50,7 @@ const kafka = new Kafka({
 
 console.log("Kafka Client Connected")
 
-const consumer = kafka.consumer({ groupId: createUUID() })
+const consumer = kafka.consumer()
 
 const run = async () => {
   await consumer.connect()
