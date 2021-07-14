@@ -36,7 +36,7 @@ const ssl_path = process.env.SSL_PATH;
 const { Kafka, logLevel } = require('kafkajs')
 
 const kafka = new Kafka({
-  clientId: 'my-app',
+  clientId: 'audio-decoder',
   brokers: [kafka_host],
   logLevel: logLevel.DEBUG,
   ssl: {
