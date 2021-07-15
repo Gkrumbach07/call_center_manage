@@ -49,6 +49,7 @@ const kafka = require('kafka-node'),
   );
 
 consumer.on('message', async function (message) {
+  console.log(message)
     if(message.value !== null && message.value !== undefined) {
       const m = JSON.parse(message.value)
       if(m["id"]
