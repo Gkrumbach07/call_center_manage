@@ -21,47 +21,55 @@ const io = require('socket.io')(server, {
   }
 });
 
+function createUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
 // kafka setup
 const kafka_host = process.env.KAFKA_HOST;
 const kafka_topic = process.env.KAFKA_TOPIC;
 const ssl_path = process.env.SSL_PATH;
 
-const kafka = require('kafka-node'),
-  Consumer = kafka.Consumer,
-  client = new kafka.KafkaClient({
-    kafkaHost: kafka_host,
-    sslOptions: {
-      rejectUnauthorized: false,
-      ca: [fs.readFileSync(ssl_path + '/ca.crt', 'utf-8')],
-      key: fs.readFileSync(ssl_path + '/user.key', 'utf-8'),
-      cert: fs.readFileSync(ssl_path + '/user.crt', 'utf-8'),
-},
-  }),
-  consumer = new Consumer(
-      client,
-      [
-          { topic: kafka_topic}
-      ],
-      {
-          autoCommit: false
-      }
-  );
+const { Kafka } = require('kafkajs')
 
-consumer.on('message', async function (message) {
-  console.log(message)
-    if(message.value !== null && message.value !== undefined) {
-      const m = JSON.parse(message.value)
-      if(m["id"]
-      && m['sentence']
-      && m["quality"]
-      && m["nouns"]) {
-        io.emit("FromKafka", JSON.stringify(m));
-      }
-    }
+const kafka = new Kafka({
+  clientId: 'audio-decoder',
+  brokers: [kafka_host],
+  ssl: {
+    rejectUnauthorized: false,
+    ca: [fs.readFileSync(ssl_path + '/ca.crt', 'utf-8')],
+    key: fs.readFileSync(ssl_path + '/user.key', 'utf-8'),
+    cert: fs.readFileSync(ssl_path + '/user.crt', 'utf-8'),
+    passphrase: fs.readFileSync(ssl_path + '/user.password', 'utf-8')
+  },
 })
 
-consumer.on('error', function (err) {console.log(err)})
+
+const consumer = kafka.consumer({ groupId: 'audio-decoder-consumer' })
+
+const run = async () => {
+  await consumer.connect()
+  await consumer.subscribe({ topic: kafka_topic, fromBeginning: false })
+
+  consumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
+      if(message.value !== null && message.value !== undefined) {
+        const m = JSON.parse(message.value)
+        if(m["id"]
+        && m['sentence']
+        && m["quality"]
+        && m["nouns"]) {
+          io.emit("FromKafka", JSON.stringify(m));
+        }
+      }
+    },
+  })
+}
+
+run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
