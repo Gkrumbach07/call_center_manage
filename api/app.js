@@ -48,9 +48,8 @@ const kafka = new Kafka({
   },
 })
 
-console.log("Kafka Client Connected")
 
-const consumer = kafka.consumer({ groupId: null })
+const consumer = kafka.consumer({ groupId: 'audio-decoder-consumer' })
 
 const run = async () => {
   await consumer.connect()
