@@ -33,12 +33,11 @@ const kafka_host = process.env.KAFKA_HOST;
 const kafka_topic = process.env.KAFKA_TOPIC;
 const ssl_path = process.env.SSL_PATH;
 
-const { Kafka, logLevel } = require('kafkajs')
+const { Kafka } = require('kafkajs')
 
 const kafka = new Kafka({
   clientId: 'audio-decoder',
   brokers: [kafka_host],
-  logLevel: logLevel.DEBUG,
   ssl: {
     rejectUnauthorized: false,
     ca: [fs.readFileSync(ssl_path + '/ca.crt', 'utf-8')],
