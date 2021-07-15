@@ -48,23 +48,19 @@ const kafka = require('kafka-node'),
       }
   );
 
-
-
-const run = async () => {
-  consumer.on('message', async function (message) {
-      if(message.value !== null && message.value !== undefined) {
-        const m = JSON.parse(message.value)
-        if(m["id"]
-        && m['sentence']
-        && m["quality"]
-        && m["nouns"]) {
-          io.emit("FromKafka", JSON.stringify(m));
-        }
+consumer.on('message', async function (message) {
+    if(message.value !== null && message.value !== undefined) {
+      const m = JSON.parse(message.value)
+      if(m["id"]
+      && m['sentence']
+      && m["quality"]
+      && m["nouns"]) {
+        io.emit("FromKafka", JSON.stringify(m));
       }
-  })
-}
+    }
+})
 
-run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
+consumer.on('error', function (err) {console.log(err})
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
