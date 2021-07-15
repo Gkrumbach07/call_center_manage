@@ -61,7 +61,7 @@ consumer.on('message', async function (message) {
     }
 })
 
-consumer.on('error', function (err) {console.log(err})
+consumer.on('error', function (err) {console.log(err)})
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
