@@ -50,7 +50,7 @@ export default function ClientComponent({ paused }) {
     // CLEAN UP THE EFFECT
     return () => socket.disconnect();
 
-  }, [rows]);
+  }, []);
 
   return (
     <div>
