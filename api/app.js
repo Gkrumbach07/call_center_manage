@@ -47,6 +47,8 @@ const kafka = new Kafka({
   },
 })
 
+console.log(kafka)
+
 
 const consumer = kafka.consumer({ groupId: 'audio-decoder-consumer' })
 
