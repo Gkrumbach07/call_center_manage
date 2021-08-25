@@ -62,7 +62,7 @@ const run = async () => {
         && m['sentence']
         && m["quality"]
         && m["nouns"]) {
-          console.log(m['sentence'])
+          console.log(m['id'], m['sentence'])
           io.emit("FromKafka", JSON.stringify(m));
         }
       }
