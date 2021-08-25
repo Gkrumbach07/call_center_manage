@@ -47,8 +47,6 @@ const kafka = new Kafka({
   },
 })
 
-console.log(kafka)
-
 
 const consumer = kafka.consumer({ groupId: 'audio-decoder-consumer' })
 
@@ -64,6 +62,7 @@ const run = async () => {
         && m['sentence']
         && m["quality"]
         && m["nouns"]) {
+          console.log(m['sentence'])
           io.emit("FromKafka", JSON.stringify(m));
         }
       }
