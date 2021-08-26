@@ -35,7 +35,7 @@ export default function ClientComponent({ paused }) {
   const classes = useStyles();
 
   useEffect(() => {
-    const socket = io(ENDPOINT);
+    socket = io(ENDPOINT);
 
     // CLEAN UP THE EFFECT
     return () => socket.disconnect();
