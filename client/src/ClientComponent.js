@@ -41,22 +41,17 @@ export default function ClientComponent() {
         const updatedValue = {}
         updatedValue[parsed['id']] = parsed
 
-        console.log("before", rows)
-
-        setRows({
-          ...rows,
+        setRows(prevRows => {
+          ...prevRows,
           ...updatedValue
         })
-       console.log("after", rows)
       });
 
     // CLEAN UP THE EFFECT
     return () => socket.disconnect();
 
   }, []);
-  
-   console.log("comp", rows)
-  
+    
 
   return (
     <div>
