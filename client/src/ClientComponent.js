@@ -41,14 +41,17 @@ export default function ClientComponent({ paused }) {
         
         const updatedValue = {}
         updatedValue[parsed['id']] = parsed
-        setRows({
-          ...rows,
-          ...updatedValue
-        })
+        
         console.log(rows, updatedValue, {
           ...rows,
           ...updatedValue
         })
+        
+        setRows({
+          ...rows,
+          ...updatedValue
+        })
+        
       }
     });
 
