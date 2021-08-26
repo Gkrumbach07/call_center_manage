@@ -41,10 +41,7 @@ export default function ClientComponent() {
         const updatedValue = {}
         updatedValue[parsed['id']] = parsed
 
-        setRows(prevRows => {
-          ...prevRows,
-          ...updatedValue
-        })
+        setRows(prevRows => {return{ ...prevRows, ...updatedValue }})
       });
 
     // CLEAN UP THE EFFECT
