@@ -29,36 +29,40 @@ const useStyles = makeStyles({
 
 export default function ClientComponent({ paused }) {
   const [rows, setRows] = useState({});
+  let socket;
 
 
   const classes = useStyles();
 
   useEffect(() => {
     const socket = io(ENDPOINT);
-    socket.on("FromKafka", data => {
-      if(!paused) {
-        var parsed = JSON.parse(data)
-        
-        const updatedValue = {}
-        updatedValue[parsed['id']] = parsed
-        
-        console.log(rows, updatedValue, {
-          ...rows,
-          ...updatedValue
-        })
-        
-        setRows({
-          ...rows,
-          ...updatedValue
-        })
-        
-      }
-    });
 
     // CLEAN UP THE EFFECT
     return () => socket.disconnect();
 
   }, []);
+  
+  io.on('connection', (socket) => {
+    console.log("connected")
+      socket.on("FromKafka", data => {
+        if(!paused) {
+          var parsed = JSON.parse(data)
+
+          const updatedValue = {}
+          updatedValue[parsed['id']] = parsed
+
+          console.log(rows, updatedValue, {
+            ...rows,
+            ...updatedValue
+          })
+
+          setRows({
+            ...rows,
+            ...updatedValue
+          })
+        }
+      });
+   });
 
   return (
     <div>
