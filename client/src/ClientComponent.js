@@ -29,7 +29,6 @@ const useStyles = makeStyles({
 
 export default function ClientComponent({ paused }) {
   const [rows, setRows] = useState({});
-  const [raw, setRaw] = useState([]);
 
 
   const classes = useStyles();
@@ -39,11 +38,13 @@ export default function ClientComponent({ paused }) {
     socket.on("FromKafka", data => {
       if(!paused) {
         var parsed = JSON.parse(data)
-        var temp = JSON.parse(JSON.stringify(rows))
-
-        temp[parsed['id']] = parsed
-        setRows(temp)
-        setRaw(raw.concat(parsed).slice(-10))
+        
+        const updatedValue = {}
+        updatedValue[parsed['id']] = parsed
+        setRows({
+          ...rows,
+          ...updatedValue
+        })
       }
     });
 
@@ -82,15 +83,6 @@ export default function ClientComponent({ paused }) {
         </TableBody>
       </Table>
     </TableContainer>
-    <List>
-      {raw.map((d, i) => {
-        return(
-          <ListItem key={i}>
-            <ListItemText primary={JSON.stringify(d)} />
-          </ListItem>
-        )
-      })}
-    </List>
   </div>
   )
 }
