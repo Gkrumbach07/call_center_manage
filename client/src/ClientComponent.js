@@ -31,6 +31,14 @@ export default function ClientComponent() {
   const [rows, setRows] = useState({});
 
   const classes = useStyles();
+  
+  const blendColor = (x) => {
+    const green = x >= 0 ? 201 : 201 - (96 * x * -1)
+    const red = x <= 0 ? 201 : 201 - (96 * x)
+    const blue = 201 - (96 * Math.abs(x))
+
+    return `rgb(${red}, ${green}, ${blue})`
+  }
 
   useEffect(() => {
     const socket = io(ENDPOINT);
@@ -65,7 +73,7 @@ export default function ClientComponent() {
         </TableHead>
         <TableBody>
           {Object.keys(rows).map((row) => (
-            <TableRow key={rows[row]['id']} className={rows[row]['quality'] === "POSITIVE" ? classes.rowPos: classes.rowNeg}>
+            <TableRow key={rows[row]['id']} style={{backgroundColor: blendColor(rows[row]["quality"])}}>
               <TableCell component="th" scope="row">
                 {rows[row]['id'].toString()}
               </TableCell>
