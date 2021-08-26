@@ -45,6 +45,10 @@ export default function ClientComponent({ paused }) {
           ...rows,
           ...updatedValue
         })
+        console.log(rows, updatedValue, {
+          ...rows,
+          ...updatedValue
+        })
       }
     });
 
