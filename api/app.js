@@ -58,6 +58,7 @@ const run = async () => {
     eachMessage: async ({ topic, partition, message }) => {
       if(message.value !== null && message.value !== undefined) {
         const m = JSON.parse(message.value)
+        console.log(m)
         if(m["id"]
         && m['sentence']
         && m["quality"]
